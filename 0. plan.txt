@@ -1,0 +1,4 @@
+1. Get rules - done
+2. Tkinter-layout
+3. Build card class
+4. Build game function
