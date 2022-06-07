@@ -1,8 +1,22 @@
 import random
 
 class BlackJackGame:
-    def __init__(self, deck) -> None:
+    '''Object representing a BlackJack game including functions for each step. Not including logic for wins / busts.
+    
+    Attributes:
+        deck -- the deck currently being used, excluding cards already dealt
+        player_cards -- cards dealt to player
+        dealer_cards -- cards dealt to dealer
+        player_score -- score of player
+        dealer_score -- score of dealer
+    '''
 
+    def __init__(self, deck) -> None:
+        '''Sets instance attributes.
+
+        Arguments:
+            deck -- list of Card objects to use in game 
+        '''        
         self.deck = deck
 
         self.player_cards = []
@@ -12,6 +26,8 @@ class BlackJackGame:
         self.dealer_score = 0
 
     def setup(self) -> None:
+        '''Handles 1st phase of the game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
+        '''        
         while len(self.player_cards) < 2:
             #Deal cards to player
             self._deal_to_player()
@@ -33,6 +49,8 @@ class BlackJackGame:
                     self.dealer_score -= 10
     
     def hit(self) -> None:
+        '''Use when player chooses to hit in 2nd phase of game. Deals 1 card to player, and modifies Ace values according to usual criteria.
+        '''        
         #Player phase
         self._deal_to_player()
 
@@ -43,17 +61,23 @@ class BlackJackGame:
             self.player_score -= 10
     
     def stand(self) -> None:
+        '''Use when player chooses to stand in 2nd phase of game. Deals cards to dealer until dealer_score >= 17.
+        ''' 
         #Dealer phase
         while self.dealer_score < 17:
             self._deal_to_dealer()
 
     def _deal_to_player(self) -> None:
+        '''Private. Used only by setup(), hit() and / or stand()
+        '''              
         player_card = random.choice(self.deck)
         self.player_cards.append(player_card)
         self.deck.remove(player_card)
         self.player_score += player_card.card_value
 
     def _deal_to_dealer(self) -> None:
+        '''Private. Used only by setup(), hit() and / or stand()
+        '''
         dealer_card = random.choice(self.deck)
         self.dealer_cards.append(dealer_card)
         self.deck.remove(dealer_card)

@@ -1,7 +1,6 @@
 from game import BlackJackGame
 from cards import generate_card_deck
 
-
 d = generate_card_deck()
 g = BlackJackGame(d)
 g.setup()
