@@ -1,4 +1,15 @@
 1. Get rules - done
-2. Tkinter-layout
-3. Build card class
-4. Build game function
+2. Tkinter-layout - done
+3. Build card class - done
+4. Build game function - done
+5. Fix layout - done
+6. Build restart function
+    Take away old buttons
+    Create restart button
+    Delete current cards
+    Put back old buttons
+    Rerun setup function
+7. Bugs to Fix
+    Dealer cards don't show if player stands and dealer doesn't deal a third to himself - done
+    Blackjack isn't identified - done
+    Dealer cards show after hitting first time - done
