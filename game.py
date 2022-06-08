@@ -1,7 +1,7 @@
 import random
 
 class BlackJackGame:
-    '''Object representing a BlackJack game including functions for each step. Not including logic for wins / busts.
+    '''Object representing a BlackJack game with functions for each phase. Excluding logic for wins / busts.
     
     Attributes:
         deck -- the deck currently being used, excluding cards already dealt
@@ -11,12 +11,7 @@ class BlackJackGame:
         dealer_score -- score of dealer
     '''
 
-    def __init__(self, deck) -> None:
-        '''Sets instance attributes.
-
-        Arguments:
-            deck -- list of Card objects to use in game 
-        '''        
+    def __init__(self, deck) -> None:     
         self.deck = deck
 
         self.player_cards = []
@@ -26,7 +21,7 @@ class BlackJackGame:
         self.dealer_score = 0
 
     def setup(self) -> None:
-        '''Handles 1st phase of the game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
+        '''Handles 1st phase of game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
         '''        
         while len(self.player_cards) < 2:
             #Deal cards to player

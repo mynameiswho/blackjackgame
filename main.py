@@ -1,15 +1,29 @@
 import tkinter as tk
 from game import BlackJackGame
-from cards import generate_card_deck
+from cards import Card, generate_card_deck
 
-def initial_setup():
+def initial_setup() -> BlackJackGame:
+    '''Gets a deck, sets up the BlackJackGame class and printing the current game state. 
+
+    Returns:
+        BlackJackGame -- instance with the game ran through 1st phase 
+    '''    
     deck = generate_card_deck()
     gamestate = BlackJackGame(deck)
     gamestate.setup()
     print_state(gamestate)
     return gamestate
 
-def print_state(gamestate, first_run=1, hit=0):
+def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
+    '''Prints current gamestate, taking BlackJack rules into account.
+
+    Arguments:
+        gamestate -- instance of BlackJackGame class setup and ran through 1st phase
+
+    Keyword Arguments:
+        first_run -- flag showing whether the function call is the first one (default: {1})
+        hit -- flag showing whether the function call comes from the hit()-function (default: {0})
+    '''    
     #Clear frames
     for frm in [frm_dealer, frm_player]:
         for child in frm.winfo_children():
@@ -58,7 +72,12 @@ def print_state(gamestate, first_run=1, hit=0):
             enable_restart()
             return
 
-def hit(gamestate):
+def hit(gamestate: BlackJackGame):
+    '''Function run by the Hit-button. Runs the BlackJackGame hit()-function and fetches + prints the results.
+
+    Arguments:
+        gamestate -- instance of BlackJackGame class setup and ran through 1st phase
+    '''    
     gamestate.hit()
     print_state(gamestate, first_run=0, hit=1)
 
@@ -69,6 +88,11 @@ def hit(gamestate):
         return
 
 def stand(gamestate):
+    '''Function run by the Stand-button. Runs the BlackJackGame stand()-function and fetches + prints the results.
+
+    Arguments:
+        gamestate -- instance of BlackJackGame class setup and ran through 1st / more phases
+    '''    
     gamestate.stand()
     print_state(gamestate, first_run=0)
 
@@ -97,6 +121,8 @@ def stand(gamestate):
         return
 
 def enable_restart():
+    '''Run when Dealer or Player wins / busts. Enables a new game without closing the window.
+    '''
     #Delete all widgets in frm_btns
     for widget in frm_btns.winfo_children():
         widget.destroy()
@@ -105,6 +131,8 @@ def enable_restart():
     tk.Button(master=frm_btns, text='New game', command= run_restart).grid(row=0, column=0, columnspan=2, sticky='ew')
     
 def run_restart():
+    '''Function run by the New game-button. Clears printed info, replaces buttons and creates a new BlackJackGame instance.
+    '''    
     #Delete all widgets in frm_btns
     for widget in frm_btns.winfo_children():
         widget.destroy()

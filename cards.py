@@ -4,7 +4,7 @@ class Card:
     
     Attributes:
         suit -- the suit in UNICODE format
-        value -- the card value, e.g. 10, J, Q etc
+        value -- the card value, e.g. 10, J, Q etc 
         card_value -- nominal card value in BlackJack game, e.g. 11 / 1 for Ace, 10 for King etc
     '''
     def __init__(self, suit: str, value: str, card_value: int) -> None:        
@@ -21,10 +21,10 @@ class Card:
         self.card_value = card_value
 
 def generate_card_deck() -> list:
-    '''Generates 1 deck of 52 playing cards based on the Card class.
+    '''Generates 1 deck with 52 playing cards based on the Card class.
 
     Returns:
-        list with deck of all 52 playing cards.
+        deck -- 52 playing cards
     '''    
     suits = ["Spades", "Hearts", "Clubs", "Diamonds"]
     suits_values = {"Spades":"\u2664", "Hearts":"\u2661", "Clubs": "\u2667", "Diamonds": "\u2662"}
