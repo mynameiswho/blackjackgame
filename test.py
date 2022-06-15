@@ -1,11 +1,10 @@
-from game import BlackJackGame
-from cards import generate_card_deck
 
-d = generate_card_deck()
-g = BlackJackGame(d)
-g.setup()
+testlst = [0, 1, 2]
 
-print(g.player_score)
-for card in g.player_cards:
-    print(f'{card.suit}{card.value}')
-g.hit()
+def test(lst):
+    lst[1] = 3
+    return lst
+
+test(testlst)
+
+print(testlst)

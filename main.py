@@ -1,16 +1,16 @@
 import tkinter as tk
-from game import BlackJackGame
+from game import BlackJackGameMechanics
 from cards import Card, generate_card_deck
 
-def initial_setup() -> BlackJackGame:
-    '''Gets a deck, sets up the BlackJackGame class and printing the current game state. 
+def initial_game_setup() -> BlackJackGameMechanics:
+    '''Gets a deck, sets up BlackJackGameMechanics class and prints current game state. 
 
     Returns:
         BlackJackGame -- instance with the game ran through 1st phase 
     '''    
     deck = generate_card_deck()
-    gamestate = BlackJackGame(deck)
-    gamestate.setup()
+    gamestate = BlackJackGameMechanics(deck)
+    gamestate.run_first_phase()
     print_state(gamestate)
     return gamestate
 
@@ -72,7 +72,7 @@ def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
             enable_restart()
             return
 
-def hit(gamestate: BlackJackGame):
+def hit(gamestate: BlackJackGameMechanics):
     '''Function run by the Hit-button. Runs the BlackJackGame hit()-function and fetches + prints the results.
 
     Arguments:
@@ -150,7 +150,7 @@ def run_restart():
     btn_hit.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
     btn_stand.grid(row=0, column=1, sticky='ew', padx=5, pady=5)
 
-    gamestate = initial_setup()
+    gamestate = initial_game_setup()
 
 #Create GUI
 w = tk.Tk()
@@ -201,6 +201,6 @@ btn_hit.grid(row=0, column=0, sticky='ew', padx=5, pady=5)
 btn_stand.grid(row=0, column=1, sticky='ew', padx=5, pady=5)
 
 #Initial setup
-gamestate = initial_setup()
+gamestate = initial_game_setup()
 
 w.mainloop()

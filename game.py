@@ -1,6 +1,7 @@
 import random
+from cards import Card
 
-class BlackJackGame:
+class BlackJackGameMechanics:
     '''Object representing a BlackJack game with functions for each phase. Excluding logic for wins / busts.
     
     Attributes:
@@ -20,29 +21,25 @@ class BlackJackGame:
         self.player_score = 0
         self.dealer_score = 0
 
-    def setup(self) -> None:
+    def run_first_phase(self) -> None:
         '''Handles 1st phase of game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
         '''        
         while len(self.player_cards) < 2:
             #Deal cards to player
             self._deal_to_player()
             
-            #Handle if both cards are ace
-            if len(self.player_cards) == 2:
-                if self.player_cards[0].card_value == 11 and self.player_cards[1].card_value == 11:
-                    self.player_cards[0].card_value = 1
-                    self.player_score -= 10
-        
+        #Handle if both player cards are ace
+        if self._check_if_two_aces(self.player_cards):
+            self._reduce_ace_value(self.player_cards[0], self.player_score)
+
         while len(self.dealer_cards) < 2:
             #Deal cards to dealer
             self._deal_to_dealer()
 
-            #Handle if both cards are ace
-            if len(self.dealer_cards) == 2:
-                if self.dealer_cards[0].card_value == 11 and self.dealer_cards[1].card_value == 11:
-                    self.dealer_cards[1].card_value = 1
-                    self.dealer_score -= 10
-    
+        #Handle if both dealer cards are ace
+        if self._check_if_two_aces(self.dealer_cards):
+            self._reduce_ace_value(self.dealer_cards[1], self.dealer_score)
+
     def hit(self) -> None:
         '''Use when player chooses to hit in 2nd phase of game. Deals 1 card to player, and modifies Ace values according to usual criteria.
         '''        
@@ -50,15 +47,13 @@ class BlackJackGame:
         self._deal_to_player()
 
         #Handle if card is ace and player busts
-        end_idx = len(self.player_cards) - 1
-        if self.player_cards[end_idx].card_value == 11 and self.player_score > 21:
-            self.player_cards[end_idx].card_value = 1
-            self.player_score -= 10
+        last_card_idx = len(self.player_cards) - 1
+        if self._check_if_ace_and_bust(self.player_cards[last_card_idx], self.player_score):
+            self._reduce_ace_value(self.player_cards[last_card_idx], self.player_score)
     
     def stand(self) -> None:
         '''Use when player chooses to stand in 2nd phase of game. Deals cards to dealer until dealer_score >= 17.
         ''' 
-        #Dealer phase
         while self.dealer_score < 17:
             self._deal_to_dealer()
 
@@ -77,3 +72,30 @@ class BlackJackGame:
         self.dealer_cards.append(dealer_card)
         self.deck.remove(dealer_card)
         self.dealer_score += dealer_card.card_value
+    
+    def _check_if_two_aces(self, dealt_cards: list) -> bool:
+        '''Private. Used only by setup()
+        '''
+        first = dealt_cards[0]
+        second = dealt_cards[1]
+        ace_value = 11
+        
+        if first.card_value == ace_value and second.card_value == ace_value:
+            return True
+        else:
+            return False
+    
+    def _check_if_ace_and_bust(self, card_to_check: Card, score_tracker: int):
+        
+        ace_value = 11
+
+        if card_to_check.card_value == ace_value and score_tracker > 21:
+            return True
+        else
+            return False
+    
+    def _reduce_ace_value(self, ace_to_adjust: Card, score_tracker: int) -> None:
+        '''Private. Used only by setup() / hit()
+        '''
+        ace_to_adjust.card_value = 1
+        score_tracker -= 10
