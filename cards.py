@@ -1,14 +1,12 @@
 
 class Card:
-    def __init__(self, suit, value, card_value) -> None:
+    def __init__(self, card_suit, deck_value, game_value) -> None:
         #Suit of card
-        self.suit = suit
-        
+        self.card_suit = card_suit
         #Representing value of card (Ace / King / Queen etc)
-        self.value = value
-
+        self.deck_value = deck_value
         #Nominal value in game (11/1 for Ace / 10 for King etc)
-        self.card_value = card_value
+        self.game_value = game_value
 
 def generate_card_deck() -> None:
     # The type of suit
