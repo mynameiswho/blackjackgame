@@ -14,7 +14,7 @@ def initial_game_setup() -> BlackJackGameMechanics:
     print_state(gamestate)
     return gamestate
 
-def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
+def print_state(gamestate: BlackJackGameMechanics, first_run: int = 1, hit: int = 0):
     '''Prints current gamestate, taking BlackJack rules into account.
 
     Arguments:
@@ -30,7 +30,7 @@ def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
             child.destroy()
 
     #Print dealer cards
-    for idx, card in enumerate(gamestate.dealer_cards):
+    for idx, card in enumerate(gamestate.cards_dealer):
         #Hide 2nd card if: 1st run or hit
         if (first_run == 1 or hit == 1) and idx == 1:
             tk.Label(master=frm_dealer,
@@ -42,7 +42,7 @@ def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
             break
 
         tk.Label(master=frm_dealer,
-            text=f'\n{card.suit}\n\n{card.value}\n',
+            text=f'\n{card.card_suit}\n\n{card.game_value}\n',
             font=('Arial', 18),
             width=5,
             relief=tk.GROOVE,
@@ -52,22 +52,22 @@ def print_state(gamestate: Card, first_run: int = 1, hit: int = 0):
     if first_run == 1 or hit == 1:
         pass
     else:
-        lbl_dealer_score['text'] = f'Dealer score: {gamestate.dealer_score}'
+        lbl_dealer_score['text'] = f'Dealer score: {gamestate.score_dealer}'
 
     #Print player cards
-    for card in gamestate.player_cards:
+    for card in gamestate.cards_player:
         tk.Label(master=frm_player,
-            text=f'\n{card.suit}\n\n{card.value}\n',
+            text=f'\n{card.card_suit}\n\n{card.game_value}\n',
             font=('Arial', 18),
             width=5,
             relief=tk.GROOVE,
             borderwidth=2).pack(side=tk.LEFT, padx=10)
 
-    lbl_player_score['text'] = f'Player score: {gamestate.player_score}'
+    lbl_player_score['text'] = f'Player score: {gamestate.score_player}'
     
     #Check if player got Blackjack on 1st run
     if first_run == 1:
-        if gamestate.player_score == 21:
+        if gamestate.score_player == 21:
             lbl_status['text'] = 'Player wins by BlackJack!'
             enable_restart()
             return
@@ -82,12 +82,12 @@ def hit(gamestate: BlackJackGameMechanics):
     print_state(gamestate, first_run=0, hit=1)
 
     #Check if player busts
-    if gamestate.player_score > 21:
+    if gamestate.score_player > 21:
         lbl_status['text'] = 'Player busts, Dealer wins!'
         enable_restart()
         return
 
-def stand(gamestate):
+def stand(gamestate: BlackJackGameMechanics):
     '''Function run by the Stand-button. Runs the BlackJackGame stand()-function and fetches + prints the results.
 
     Arguments:
@@ -97,25 +97,25 @@ def stand(gamestate):
     print_state(gamestate, first_run=0)
 
     #Check if dealer busts
-    if gamestate.dealer_score > 21:
+    if gamestate.score_dealer > 21:
         lbl_status['text'] = 'Dealer busts, Player wins!'
         enable_restart()
         return
     
     #Check if dealer won
-    if gamestate.dealer_score > gamestate.player_score:
+    if gamestate.score_dealer > gamestate.score_player:
         lbl_status['text'] = 'Dealer beats Player, Dealer wins!'
         enable_restart()
         return
     
     #Check if player won
-    if gamestate.dealer_score < gamestate.player_score:
+    if gamestate.score_dealer < gamestate.score_player:
         lbl_status['text'] = 'Player beats Dealer, Player wins!'
         enable_restart()
         return
     
     #Check if tie
-    if gamestate.dealer_score == gamestate.player_score:
+    if gamestate.score_dealer == gamestate.score_player:
         lbl_status['text'] = 'Tie game!'
         enable_restart()
         return

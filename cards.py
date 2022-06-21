@@ -7,18 +7,18 @@ class Card:
         value -- the card value, e.g. 10, J, Q etc 
         card_value -- nominal card value in BlackJack game, e.g. 11 / 1 for Ace, 10 for King etc
     '''
-    def __init__(self, suit: str, value: str, card_value: int) -> None:        
+    def __init__(self, card_suit: str, deck_value: str, game_value: int) -> None:        
         '''Arguments:
             suit -- the suit of the card
             value -- the card value, e.g. A, K, 10
             card_value -- the nominal card value in BlackJack game, e.g. A = 11, K = 10
         '''        
         #Suit of card
-        self.suit = suit
+        self.card_suit = card_suit
         #Representing value of card (Ace / King / Queen etc)
-        self.value = value
+        self.deck_value = deck_value
         #Nominal value in game (11/1 for Ace / 10 for King etc)
-        self.card_value = card_value
+        self.game_value = game_value
 
 def generate_card_deck() -> list:
     '''Generates 1 deck with 52 playing cards based on the Card class.

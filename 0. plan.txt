@@ -9,7 +9,10 @@
     Delete current cards
     Put back old buttons
     Rerun setup function
-7. Bugs to Fix
+7. Refactor codebase to ease maintaining
+    Ongoing
+8. Bugs to Fix
     Dealer cards don't show if player stands and dealer doesn't deal a third to himself - done
     Blackjack isn't identified - done
     Dealer cards show after hitting first time - done
+    When A shows up as 3rd card, adjustment not made to player score

@@ -1,10 +1,15 @@
+class First:
+    def __init__(self):
+        super().__init__()
+        self.var = 'Hey'
+    
+    def print_hello(self):
+        print('Hello')
+  
+class Fourth(First):
+    def __init__(self):
+        super().__init__()
 
-testlst = [0, 1, 2]
-
-def test(lst):
-    lst[1] = 3
-    return lst
-
-test(testlst)
-
-print(testlst)
+f = Fourth()
+print(f.var)
+f.print_hello()
