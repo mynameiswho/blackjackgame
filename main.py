@@ -52,7 +52,7 @@ def print_state(gamestate: BlackJackGameMechanics, first_run: int = 1, hit: int 
     if first_run == 1 or hit == 1:
         pass
     else:
-        lbl_dealer_score['text'] = f'Dealer score: {gamestate.score_dealer}'
+        lbl_dealer_score['text'] = f'Dealer score: {gamestate.get_dealer_score()}'
 
     #Print player cards
     for card in gamestate.cards_player:
@@ -63,11 +63,11 @@ def print_state(gamestate: BlackJackGameMechanics, first_run: int = 1, hit: int 
             relief=tk.GROOVE,
             borderwidth=2).pack(side=tk.LEFT, padx=10)
 
-    lbl_player_score['text'] = f'Player score: {gamestate.score_player}'
+    lbl_player_score['text'] = f'Player score: {gamestate.get_player_score()}'
     
     #Check if player got Blackjack on 1st run
     if first_run == 1:
-        if gamestate.score_player == 21:
+        if gamestate.get_player_score() == 21:
             lbl_status['text'] = 'Player wins by BlackJack!'
             enable_restart()
             return
@@ -82,7 +82,7 @@ def hit(gamestate: BlackJackGameMechanics):
     print_state(gamestate, first_run=0, hit=1)
 
     #Check if player busts
-    if gamestate.score_player > 21:
+    if gamestate.get_player_score() > 21:
         lbl_status['text'] = 'Player busts, Dealer wins!'
         enable_restart()
         return
@@ -97,25 +97,25 @@ def stand(gamestate: BlackJackGameMechanics):
     print_state(gamestate, first_run=0)
 
     #Check if dealer busts
-    if gamestate.score_dealer > 21:
+    if gamestate.get_dealer_score() > 21:
         lbl_status['text'] = 'Dealer busts, Player wins!'
         enable_restart()
         return
     
     #Check if dealer won
-    if gamestate.score_dealer > gamestate.score_player:
+    if gamestate.get_dealer_score() > gamestate.get_player_score():
         lbl_status['text'] = 'Dealer beats Player, Dealer wins!'
         enable_restart()
         return
     
     #Check if player won
-    if gamestate.score_dealer < gamestate.score_player:
+    if gamestate.get_dealer_score() < gamestate.get_player_score():
         lbl_status['text'] = 'Player beats Dealer, Player wins!'
         enable_restart()
         return
     
     #Check if tie
-    if gamestate.score_dealer == gamestate.score_player:
+    if gamestate.get_dealer_score() == gamestate.get_player_score():
         lbl_status['text'] = 'Tie game!'
         enable_restart()
         return

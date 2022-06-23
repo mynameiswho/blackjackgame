@@ -15,8 +15,7 @@ class BlackJackGameMechanics:
         self.deck = deck
         self.cards_player = []
         self.cards_dealer = []
-        self.score_player = 0
-        self.score_dealer = 0
+        self.count = 0
 
     def run_first_phase(self) -> None:
         '''Handles 1st phase of game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
@@ -24,34 +23,60 @@ class BlackJackGameMechanics:
         while len(self.cards_player) < 2:
             self._deal_to_player()
         if self._check_if_two_aces(self.cards_player):
-            self._reduce_ace_value(self.cards_player[0], self.score_player)
+            self._reduce_ace_value(self.cards_player[0])
 
         while len(self.cards_dealer) < 2:
             self._deal_to_dealer()
         if self._check_if_two_aces(self.cards_dealer):
-            self._reduce_ace_value(self.cards_dealer[1], self.score_dealer)
+            self._reduce_ace_value(self.cards_dealer[1])
 
     def hit(self) -> None:
         '''Used when player chooses to hit in 2nd phase of game. Deals 1 card to player, and modifies Ace values according to usual criteria.
         '''        
         self._deal_to_player()
         last_card_idx = len(self.cards_player) - 1
-        if self._check_if_ace_and_bust(self.cards_player[last_card_idx], self.score_player):
-            self._reduce_ace_value(self.cards_player[last_card_idx], self.score_player)
+        if self._check_if_ace_and_bust(self.cards_player[last_card_idx], self.get_player_score()):
+            self._reduce_ace_value(self.cards_player[last_card_idx])
     
     def stand(self) -> None:
         '''Used when player chooses to stand in 2nd phase of game. Deals cards to dealer until dealer_score >= 17.
         ''' 
-        while self.score_dealer < 17:
+        while self.get_dealer_score() < 17:
             self._deal_to_dealer()
-
+        last_card_idx = len(self.cards_dealer) - 1
+        if self._check_if_ace_and_bust(self.cards_dealer[last_card_idx], self.get_dealer_score()):
+            self._reduce_ace_value(self.cards_dealer[last_card_idx])
+    
+    def get_player_score(self) -> int:
+        s = 0
+        for c in self.cards_player:
+            s += c.game_value
+        return s
+    
+    def get_dealer_score(self) -> int:
+        s = 0
+        for c in self.cards_dealer:
+            s += c.game_value
+        return s
+    
+    def player_bust(self) -> bool:
+        if self.get_player_score() > 21:
+            return True
+        else:
+            return False
+        
+    def dealer_bust(self) -> bool:
+        if self.get_dealer_score() > 21:
+            return True
+        else:
+            return False
+        
     def _deal_to_player(self) -> None:
         '''Used only by setup(), hit() and / or stand()
         '''              
         player_card = random.choice(self.deck)
         self.cards_player.append(player_card)
         self.deck.remove(player_card)
-        self.score_player += player_card.game_value
 
     def _deal_to_dealer(self) -> None:
         '''Used only by setup(), hit() and / or stand()
@@ -59,7 +84,6 @@ class BlackJackGameMechanics:
         dealer_card = random.choice(self.deck)
         self.cards_dealer.append(dealer_card)
         self.deck.remove(dealer_card)
-        self.score_dealer += dealer_card.game_value
     
     def _check_if_two_aces(self, dealt_cards: list) -> bool:
         '''Used only by setup()
@@ -72,7 +96,7 @@ class BlackJackGameMechanics:
         else:
             return False
     
-    def _check_if_ace_and_bust(self, card_to_check: Card, score_tracker: int):
+    def _check_if_ace_and_bust(self, card_to_check: Card, score_tracker: int) -> bool:
         '''Used only by hit()
         '''
         ace_value = 11
@@ -81,8 +105,7 @@ class BlackJackGameMechanics:
         else:
             return False
     
-    def _reduce_ace_value(self, ace_to_adjust: Card, score_tracker: int) -> None:
+    def _reduce_ace_value(self, ace_to_adjust: Card) -> None:
         '''Used by setup() / hit()
         '''
         ace_to_adjust.game_value = 1
-        score_tracker -= 10

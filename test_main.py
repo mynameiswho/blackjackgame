@@ -10,7 +10,5 @@ def BJGM_setup() -> BlackJackGameMechanics:
     BJGM_setup = BlackJackGameMechanics(d)
     return BJGM_setup
 
-
-
 if __name__ == '__main__':
     pytest.main()

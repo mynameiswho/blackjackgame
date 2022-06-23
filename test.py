@@ -1,15 +1,13 @@
-class First:
-    def __init__(self):
-        super().__init__()
-        self.var = 'Hey'
-    
-    def print_hello(self):
-        print('Hello')
-  
-class Fourth(First):
-    def __init__(self):
-        super().__init__()
+from refactor_app import ApplicationWindow
+import tkinter as tk
 
-f = Fourth()
-print(f.var)
-f.print_hello()
+def hit():
+    print('hey')
+def stand():
+    print('yo')
+
+r = tk.Tk()
+c = ApplicationWindow(r)
+c.gui_setup(hit, stand)
+c.grid(sticky='nsew')
+r.mainloop()
