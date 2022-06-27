@@ -17,7 +17,7 @@ class BlackJackGameMechanics:
         self.cards_dealer = []
         self.count = 0
 
-    def run_first_phase(self) -> None:
+    def first_deal(self) -> None:
         '''Handles 1st phase of game. Deals 2 cards each to dealer and player, and modifies Ace values according to usual criteria. 
         '''        
         while len(self.cards_player) < 2:

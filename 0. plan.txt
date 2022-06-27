@@ -16,17 +16,8 @@
     Blackjack isn't identified - done
     Dealer cards show after hitting first time - done
     When A shows up as 3rd card, adjustment not made to player score - done
-
-deal 2 cards to player
-deal 1 card to dealer
-    check if player has Blackjack
-
-player input
-
-hit -> deal 1 card to player
-    check if player bust or has Blackjack
-
-stand -> deal 1 card to dealer until > 17
-    check if dealer bust or who wins
-
-present restart game option
+9. To fix in Refactor
+    Check for BlackJack in first phase - done
+    Restart function - done
+    Refactor print functions into lowprio functions class - done
+    Try to create separate classes for dealer / player

@@ -10,7 +10,7 @@ def initial_game_setup() -> BlackJackGameMechanics:
     '''    
     deck = generate_card_deck()
     gamestate = BlackJackGameMechanics(deck)
-    gamestate.run_first_phase()
+    gamestate.first_deal()
     print_state(gamestate)
     return gamestate
 

@@ -34,6 +34,5 @@ def generate_card_deck() -> list:
     deck = []
     for suit in suits:
         for cardnumber in cards:
-            deck.append(Card(suits_values[suit], cardnumber, cards_values[cardnumber]))
-                
+            deck.append(Card(suits_values[suit], cardnumber, cards_values[cardnumber]))          
     return deck
