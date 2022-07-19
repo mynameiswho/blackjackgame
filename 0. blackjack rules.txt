@@ -1,4 +1,3 @@
-
 - A card is dealt to the player facing upwards (visible to everyone).
 - The dealer deals a card to himself visible to everyone.
 - Another card is given to the player facing upwards.

@@ -1,12 +1,13 @@
-from game import BlackJackGame
-from cards import generate_card_deck
+from refactor_app import ApplicationWindow
+import tkinter as tk
 
+def hit():
+    print('hey')
+def stand():
+    print('yo')
 
-d = generate_card_deck()
-g = BlackJackGame(d)
-g.setup()
-
-print(g.player_score)
-for card in g.player_cards:
-    print(f'{card.suit}{card.value}')
-g.hit()
+r = tk.Tk()
+c = ApplicationWindow(r)
+c.gui_setup(hit, stand)
+c.grid(sticky='nsew')
+r.mainloop()
