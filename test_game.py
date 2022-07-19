@@ -1,4 +1,3 @@
-from os import PathLike
 import pytest
 from regex import B
 from cards import generate_card_deck
