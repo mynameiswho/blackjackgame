@@ -1,5 +1,5 @@
 import tkinter as tk
-from refactor_gameflow import BackOfficeFunctions
+from gameflow import BackOfficeFunctions
 
 class ApplicationWindow(tk.Frame):
     def __init__(self, parent: tk.Tk, *args, **kwargs):
